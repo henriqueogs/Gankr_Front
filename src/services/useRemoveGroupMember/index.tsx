@@ -1,14 +1,6 @@
 import { useState } from "react";
 import { groupApi } from "../../api/client";
-
-interface UseRemoveGroupMemberState {
-  loading: boolean;
-  error: string | null;
-}
-
-interface UseRemoveGroupMemberReturn extends UseRemoveGroupMemberState {
-  removeMember: (groupId: string, userId: string) => Promise<void>;
-}
+import { UseRemoveGroupMemberState, UseRemoveGroupMemberReturn } from "./types";
 
 export const useRemoveGroupMember = (): UseRemoveGroupMemberReturn => {
   const [state, setState] = useState<UseRemoveGroupMemberState>({
