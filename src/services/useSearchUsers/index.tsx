@@ -1,17 +1,6 @@
 import { useState, useCallback } from "react";
 import { userApi } from "../../api/client";
-import { AuthenticatedUser } from "../../api/types";
-
-interface UseSearchUsersState {
-  users: AuthenticatedUser[];
-  loading: boolean;
-  error: string | null;
-}
-
-interface UseSearchUsersReturn extends UseSearchUsersState {
-  searchByNickname: (nickname: string) => Promise<void>;
-  clearResults: () => void;
-}
+import { UseSearchUsersState, UseSearchUsersReturn } from "./types";
 
 export const useSearchUsers = (): UseSearchUsersReturn => {
   const [state, setState] = useState<UseSearchUsersState>({
