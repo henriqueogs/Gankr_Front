@@ -1,22 +1,10 @@
 import { useState } from "react";
 import { authApi } from "../../api/client";
-
-interface UseRegisterPayload {
-  email: string;
-  password: string;
-  displayName: string;
-  nickname: string;
-  avatarUrl?: string;
-}
-
-interface UseRegisterState {
-  loading: boolean;
-  error: string | null;
-}
-
-interface UseRegisterReturn extends UseRegisterState {
-  register: (payload: UseRegisterPayload) => Promise<void>;
-}
+import {
+  UseRegisterPayload,
+  UseRegisterState,
+  UseRegisterReturn,
+} from "./types";
 
 export const useRegister = (): UseRegisterReturn => {
   const [state, setState] = useState<UseRegisterState>({
