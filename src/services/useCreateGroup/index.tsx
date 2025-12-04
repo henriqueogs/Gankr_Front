@@ -1,19 +1,10 @@
 import { useState } from "react";
 import { groupApi } from "../../api/client";
-
-interface UseCreateGroupPayload {
-  name: string;
-  nickname: string;
-}
-
-interface UseCreateGroupState {
-  loading: boolean;
-  error: string | null;
-}
-
-interface UseCreateGroupReturn extends UseCreateGroupState {
-  createGroup: (payload: UseCreateGroupPayload) => Promise<void>;
-}
+import {
+  UseCreateGroupPayload,
+  UseCreateGroupState,
+  UseCreateGroupReturn,
+} from "./types";
 
 export const useCreateGroup = (): UseCreateGroupReturn => {
   const [state, setState] = useState<UseCreateGroupState>({
