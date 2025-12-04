@@ -1,33 +1,30 @@
-import { FormEvent, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { FormEvent, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from "../hooks/useAuth";
+import { useLogin } from "../services";
 
 export function LoginPage() {
-  const { login } = useAuth();
+  const { setUserSession } = useAuth();
+  const { login, loading, error } = useLogin();
   const navigate = useNavigate();
   const location = useLocation();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    setLoading(true);
-    setError(null);
 
     try {
-      await login(email, password);
+      const response = await login({ email, password });
+      setUserSession(response.token, response.user);
+
       const redirect =
         (location.state as { from?: { pathname: string } })?.from?.pathname ??
-        '/dashboard';
+        "/dashboard";
       navigate(redirect, { replace: true });
     } catch (err) {
-      console.error(err);
-      setError('Credenciais inválidas.');
-    } finally {
-      setLoading(false);
+      // Error is handled by the hook
     }
   };
 
@@ -51,13 +48,13 @@ export function LoginPage() {
             onChange={(event) => setPassword(event.target.value)}
             required
           />
-          {error && <span style={{ color: '#f87171' }}>{error}</span>}
+          {error && <span style={{ color: "#f87171" }}>{error}</span>}
           <button className="primary-btn" disabled={loading}>
-            {loading ? 'Entrando...' : 'Entrar'}
+            {loading ? "Entrando..." : "Entrar"}
           </button>
         </form>
-        <p style={{ marginTop: '1rem' }}>
-          Ainda não tem conta?{' '}
+        <p style={{ marginTop: "1rem" }}>
+          Ainda não tem conta?{" "}
           <Link className="link" to="/register">
             Registre-se
           </Link>

@@ -1,19 +1,19 @@
-import { FormEvent, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { FormEvent, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from "../hooks/useAuth";
+import { useRegister } from "../services";
 
 export function RegisterPage() {
-  const { register } = useAuth();
+  const { register: authRegister } = useAuth();
+  const { register, loading, error } = useRegister();
   const navigate = useNavigate();
   const [form, setForm] = useState({
-    email: '',
-    password: '',
-    displayName: '',
-    nickname: '',
+    email: "",
+    password: "",
+    displayName: "",
+    nickname: "",
   });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setForm((prev) => ({ ...prev, [event.target.name]: event.target.value }));
@@ -21,17 +21,17 @@ export function RegisterPage() {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    setLoading(true);
-    setError(null);
 
     try {
       await register(form);
-      navigate('/dashboard');
+      // Após registro bem-sucedido, redireciona para login
+      navigate("/login", {
+        state: {
+          message: "Conta criada com sucesso! Faça login para continuar.",
+        },
+      });
     } catch (err) {
-      setError('Não foi possível registrar. Verifique os dados.');
-      console.error(err);
-    } finally {
-      setLoading(false);
+      // Error is handled by the hook
     }
   };
 
@@ -79,13 +79,13 @@ export function RegisterPage() {
             required
             minLength={6}
           />
-          {error && <span style={{ color: '#f87171' }}>{error}</span>}
+          {error && <span style={{ color: "#f87171" }}>{error}</span>}
           <button className="primary-btn" disabled={loading}>
-            {loading ? 'Criando...' : 'Registrar'}
+            {loading ? "Criando..." : "Registrar"}
           </button>
         </form>
-        <p style={{ marginTop: '1rem' }}>
-          Já possui conta?{' '}
+        <p style={{ marginTop: "1rem" }}>
+          Já possui conta?{" "}
           <Link className="link" to="/login">
             Entre aqui
           </Link>

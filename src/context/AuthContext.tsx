@@ -4,20 +4,17 @@ import {
   useCallback,
   useMemo,
   useState,
-} from 'react';
+} from "react";
 
-import {
-  AuthenticatedUser,
-  AuthResponse,
-  authApi,
-  setAuthToken,
-} from '../api/client';
+import { AuthenticatedUser, AuthResponse } from "../api/types";
+import { authApi, setAuthToken } from "../api/client";
 
 interface AuthContextValue {
   user: AuthenticatedUser | null;
   token: string | null;
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<void>;
+  setUserSession: (token: string, user: AuthenticatedUser) => void;
   register: (payload: {
     email: string;
     password: string;
@@ -28,10 +25,10 @@ interface AuthContextValue {
   setSession: (payload: AuthResponse) => void;
 }
 
-const STORAGE_KEY = 'gankr.auth';
+const STORAGE_KEY = "gankr.auth";
 
 export const AuthContext = createContext<AuthContextValue | undefined>(
-  undefined,
+  undefined
 );
 
 const getInitialState = () => {
@@ -76,13 +73,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       });
       persist(payload);
     },
-    [persist],
+    [persist]
   );
 
-  const login = useCallback(async (email: string, password: string) => {
-    const session = await authApi.login({ email, password });
-    setSession(session);
-  }, [setSession]);
+  const setUserSession = useCallback(
+    (token: string, user: AuthenticatedUser) => {
+      const payload: AuthResponse = { token, user };
+      setSession(payload);
+    },
+    [setSession]
+  );
+
+  const login = useCallback(
+    async (email: string, password: string) => {
+      const session = await authApi.login({ email, password });
+      setSession(session);
+    },
+    [setSession]
+  );
 
   const register = useCallback(
     async (payload: {
@@ -94,7 +102,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const session = await authApi.register(payload);
       setSession(session);
     },
-    [setSession],
+    [setSession]
   );
 
   const logout = useCallback(() => {
@@ -111,11 +119,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       token,
       isAuthenticated: Boolean(user && token),
       login,
+      setUserSession,
       register,
       logout,
       setSession,
     }),
-    [user, token, login, register, logout, setSession],
+    [user, token, login, register, logout, setSession]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
