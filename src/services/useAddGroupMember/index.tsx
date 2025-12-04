@@ -1,14 +1,6 @@
 import { useState } from "react";
 import { groupApi } from "../../api/client";
-
-interface UseAddGroupMemberState {
-  loading: boolean;
-  error: string | null;
-}
-
-interface UseAddGroupMemberReturn extends UseAddGroupMemberState {
-  addMember: (groupId: string, nickname: string) => Promise<void>;
-}
+import { UseAddGroupMemberState, UseAddGroupMemberReturn } from "./types";
 
 export const useAddGroupMember = (): UseAddGroupMemberReturn => {
   const [state, setState] = useState<UseAddGroupMemberState>({
