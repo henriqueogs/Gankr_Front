@@ -1,16 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { groupApi } from "../../api/client";
-import { GroupDetail } from "../../api/types";
-
-interface UseGetGroupDetailState {
-  group: GroupDetail | null;
-  loading: boolean;
-  error: string | null;
-}
-
-interface UseGetGroupDetailReturn extends UseGetGroupDetailState {
-  refetch: () => Promise<void>;
-}
+import { UseGetGroupDetailState, UseGetGroupDetailReturn } from "./types";
 
 export const useGetGroupDetail = (groupId: string): UseGetGroupDetailReturn => {
   const [state, setState] = useState<UseGetGroupDetailState>({
