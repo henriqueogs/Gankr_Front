@@ -1,20 +1,6 @@
 import { useState } from "react";
 import { authApi } from "../../api/client";
-import { AuthResponse } from "../../api/types";
-
-interface UseLoginPayload {
-  email: string;
-  password: string;
-}
-
-interface UseLoginState {
-  loading: boolean;
-  error: string | null;
-}
-
-interface UseLoginReturn extends UseLoginState {
-  login: (payload: UseLoginPayload) => Promise<AuthResponse>;
-}
+import { UseLoginPayload, UseLoginState, UseLoginReturn } from "./types";
 
 export const useLogin = (): UseLoginReturn => {
   const [state, setState] = useState<UseLoginState>({
