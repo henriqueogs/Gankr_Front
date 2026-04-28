@@ -42,9 +42,7 @@ describe("LoginPage", () => {
   it("should render login form", () => {
     render(<LoginPageWithRouter />);
 
-    expect(
-      screen.getByRole("heading", { name: /bem-vindo ao gankr/i })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /gankr/i })).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Email")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Senha")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /entrar/i })).toBeInTheDocument();

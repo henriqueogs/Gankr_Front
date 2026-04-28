@@ -43,11 +43,11 @@ describe("RegisterPage", () => {
     render(<RegisterPageWithRouter />);
 
     expect(
-      screen.getByRole("heading", { name: /crie sua conta/i })
+      screen.getByRole("heading", { name: /monte seu squad/i })
     ).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Nome exibido")).toBeInTheDocument();
     expect(
-      screen.getByPlaceholderText("Nickname (sem espaços)")
+      screen.getByPlaceholderText("@nickname")
     ).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Email")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Senha")).toBeInTheDocument();

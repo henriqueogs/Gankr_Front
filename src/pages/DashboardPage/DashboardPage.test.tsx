@@ -18,6 +18,16 @@ jest.mock("../../services", () => ({
   useSearchUsers: () => mockUseSearchUsers(),
 }));
 
+jest.mock("../../services/useNotifications", () => ({
+  useNotifications: () => ({
+    notifications: [],
+    unreadCount: 0,
+    markRead: jest.fn(),
+    respondFriendRequest: jest.fn(),
+    refetch: jest.fn(),
+  }),
+}));
+
 const DashboardPageWithRouter = () => (
   <BrowserRouter>
     <DashboardPage />
@@ -68,9 +78,9 @@ describe("DashboardPage", () => {
     render(<DashboardPageWithRouter />);
 
     expect(
-      screen.getByRole("heading", { name: /dashboard/i })
+      screen.getByRole("heading", { name: /test user/i })
     ).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /sair/i })).toBeInTheDocument();
+    expect(screen.getByText(/painel principal/i)).toBeInTheDocument();
   });
 
   it("should render create group form", () => {

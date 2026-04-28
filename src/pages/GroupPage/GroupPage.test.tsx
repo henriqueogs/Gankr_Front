@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { BrowserRouter, MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 import { GroupPage } from "./index";
 
 // Mock dos hooks
@@ -8,6 +8,9 @@ const mockUseGetGroupDetail = jest.fn();
 const mockUseAddGroupMember = jest.fn();
 const mockUseRemoveGroupMember = jest.fn();
 const mockUseSearchUsers = jest.fn();
+const mockUseChampionships = jest.fn();
+const mockUseGroupStats = jest.fn();
+const mockUseGroupPosts = jest.fn();
 
 jest.mock("../../hooks/useAuth", () => ({
   useAuth: () => mockUseAuth(),
@@ -18,12 +21,35 @@ jest.mock("../../services", () => ({
   useAddGroupMember: () => mockUseAddGroupMember(),
   useRemoveGroupMember: () => mockUseRemoveGroupMember(),
   useSearchUsers: () => mockUseSearchUsers(),
+  useChampionships: () => mockUseChampionships(),
+  useGroupStats: () => mockUseGroupStats(),
+}));
+
+jest.mock("../../services/useGroupPosts", () => ({
+  useGroupPosts: () => mockUseGroupPosts(),
+}));
+
+jest.mock("../../services/useNotifications", () => ({
+  useNotifications: () => ({
+    notifications: [],
+    unreadCount: 0,
+    markRead: jest.fn(),
+    respondFriendRequest: jest.fn(),
+    refetch: jest.fn(),
+  }),
+}));
+
+jest.mock("../../api/client", () => ({
+  socialApi: {
+    getGroupRequests: jest.fn().mockResolvedValue([]),
+    respondGroupRequest: jest.fn().mockResolvedValue({}),
+  },
 }));
 
 // Mock do useParams
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
-  useParams: () => ({ groupId: "test-id" }),
+  useParams: () => ({ id: "test-id" }),
 }));
 
 const GroupPageWithRouter = ({ groupId = "test-id" } = {}) => (
@@ -53,6 +79,9 @@ describe("GroupPage", () => {
       group: {
         id: "test-id",
         name: "Test Group",
+        nickname: "test-group",
+        ownerId: "owner-id",
+        membershipRole: "MEMBER",
         members: [],
       },
       loading: false,
@@ -81,13 +110,38 @@ describe("GroupPage", () => {
       loading: false,
       error: null,
     });
+
+    mockUseChampionships.mockReturnValue({
+      championships: [],
+      loading: false,
+      error: null,
+      refetch: jest.fn(),
+    });
+
+    mockUseGroupStats.mockReturnValue({
+      stats: null,
+      loading: false,
+      error: null,
+      refetch: jest.fn(),
+    });
+
+    mockUseGroupPosts.mockReturnValue({
+      posts: [],
+      loading: false,
+      error: null,
+      createPost: jest.fn(),
+      deletePost: jest.fn(),
+      refetch: jest.fn(),
+    });
   });
 
-  it("should render group header navigation", () => {
+  it("should render group header navigation", async () => {
     render(<GroupPageWithRouter />);
 
-    expect(screen.getByRole("link", { name: /voltar/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /sair/i })).toBeInTheDocument();
+    expect(
+      await screen.findByRole("button", { name: /voltar/i })
+    ).toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: /atualizar/i }).length).toBeGreaterThan(0);
   });
 
   it("should render members section", () => {
