@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
@@ -32,7 +29,47 @@ export default {
           800: '#1e293b',
           900: '#0f172a',
           950: '#020617',
-        }
+        },
+        midnight: {
+          50: "#f5f6fb",
+          100: "#e0e4ff",
+          200: "#bac0ff",
+          300: "#8d97ff",
+          400: "#6771f6",
+          500: "#4c55de",
+          600: "#373db6",
+          700: "#262a84",
+          800: "#15194f",
+          900: "#090c2b",
+          950: "#050814",
+        },
+        nebula: {
+          100: "#e2f1ff",
+          200: "#bcd9ff",
+          300: "#8fbaff",
+          400: "#6a9bff",
+          500: "#527ef4",
+          600: "#3f63d3",
+          700: "#2d47a5",
+          800: "#1b2d71",
+          900: "#0d163e",
+        },
+        aurum: {
+          200: "#fff1c6",
+          300: "#fee29a",
+          400: "#fcd77f",
+          500: "#f4be4e",
+        },
+      },
+      boxShadow: {
+        glow: "0 20px 45px rgba(124, 58, 237, 0.35)",
+        soft: "0 10px 35px rgba(5, 8, 20, 0.55)",
+      },
+      borderRadius: {
+        shell: "32px",
+      },
+      spacing: {
+        18: "4.5rem",
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],

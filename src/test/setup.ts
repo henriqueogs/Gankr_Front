@@ -3,7 +3,7 @@ import '@testing-library/jest-dom';
 // Suprimir warnings do React Router sobre migração para v7
 const originalWarn = console.warn;
 beforeAll(() => {
-  console.warn = (...args: any[]) => {
+  console.warn = (...args: unknown[]) => {
     if (
       typeof args[0] === 'string' &&
       args[0].includes('React Router Future Flag Warning')

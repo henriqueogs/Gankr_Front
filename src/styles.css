@@ -5,106 +5,17 @@
 @layer base {
   :root {
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    /* Espaçamento padronizado: 4 / 8 / 12 / 16 / 24 / 32 */
   }
 
   body {
-    @apply bg-gradient-to-b from-dark-800 via-dark-900 to-dark-950 text-dark-50 min-h-screen;
-  }
-}
-
-@layer components {
-
-  /* Container base para páginas */
-  .page-container {
-    @apply max-w-md mx-auto px-4 py-12 animate-fade-in;
+    @apply min-h-screen bg-midnight-950 text-slate-100 antialiased;
+    background-image:
+      radial-gradient(circle at 0% 0%, rgba(80, 64, 255, 0.08), transparent 45%),
+      radial-gradient(circle at 100% 0%, rgba(103, 232, 249, 0.05), transparent 40%);
   }
 
-  /* Card base */
-  .card {
-    @apply bg-dark-900/85 border border-primary-400/30 rounded-2xl p-8 shadow-2xl shadow-dark-950/40 backdrop-blur-sm;
-  }
-
-  /* Formulários */
-  .form {
-    @apply flex flex-col gap-3;
-  }
-
-  .input {
-    @apply px-4 py-3.5 rounded-xl bg-dark-900/90 border border-dark-50/10 text-dark-50 placeholder-dark-400 transition-all duration-200;
-  }
-
-  .input:focus {
-    @apply outline-none ring-2 ring-primary-400/50 border-primary-400/50;
-  }
-
-  /* Botões */
-  .btn-primary {
-    @apply bg-gradient-to-r from-primary-400 to-primary-500 text-dark-900 rounded-xl px-4 py-3.5 font-semibold transition-all duration-200;
-  }
-
-  .btn-primary:hover {
-    @apply from-primary-300 to-primary-400;
-  }
-
-  .btn-primary:disabled {
-    @apply opacity-60 cursor-not-allowed;
-  }
-
-  .btn-primary:disabled:hover {
-    @apply from-primary-400 to-primary-500;
-  }
-
-  .btn-danger {
-    @apply bg-transparent text-red-400 border border-red-400/50 rounded-lg px-3 py-1.5 text-sm transition-all duration-200;
-  }
-
-  .btn-danger:hover {
-    @apply bg-red-400/10 border-red-400;
-  }
-
-  /* Links */
-  .link {
-    @apply text-primary-400 font-medium transition-colors duration-200;
-  }
-
-  .link:hover {
-    @apply text-primary-300;
-  }
-
-  /* Listas e grids */
-  .groups-grid {
-    @apply flex flex-col gap-4 mt-6;
-  }
-
-  .group-item {
-    @apply p-4 rounded-xl border border-primary-400/10 bg-dark-900/60 transition-all duration-200 cursor-pointer;
-  }
-
-  .group-item:hover {
-    @apply border-primary-400/20;
-  }
-
-  .members-list {
-    @apply flex flex-col gap-3 mt-4;
-  }
-
-  .member-row {
-    @apply flex items-center justify-between p-3 rounded-lg bg-dark-900/60 border border-dark-700/90;
-  }
-
-  /* Tags e chips */
-  .chip {
-    @apply px-3 py-1 rounded-full text-xs uppercase font-semibold;
-    @apply bg-primary-400/15 text-primary-200 border border-primary-400/20;
-  }
-
-  /* Estados de loading */
-  .loading-spinner {
-    @apply animate-spin rounded-full h-5 w-5 border-2 border-primary-400/30 border-t-primary-400;
-  }
-
-  /* Mensagens de erro */
-  .error-message {
-    @apply text-red-400 text-sm mt-2 bg-red-400/10 border border-red-400/20 rounded-lg p-3;
+  ::selection {
+    @apply bg-indigo-500/60 text-white;
   }
 }
