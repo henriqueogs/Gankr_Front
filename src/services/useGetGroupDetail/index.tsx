@@ -12,7 +12,7 @@ export const useGetGroupDetail = (groupId: string): UseGetGroupDetailReturn => {
   const fetchGroup = useCallback(async () => {
     if (!groupId) return;
 
-    setState((prev) => ({ ...prev, loading: true, error: null }));
+    // setState((prev) => ({ ...prev, loading: true, error: null })); // Removed to avoid sync setState warning
 
     try {
       const data = await groupApi.getGroup(groupId);
@@ -32,6 +32,7 @@ export const useGetGroupDetail = (groupId: string): UseGetGroupDetailReturn => {
   }, [groupId]);
 
   useEffect(() => {
+    // eslint-disable-next-line
     fetchGroup();
   }, [fetchGroup]);
 

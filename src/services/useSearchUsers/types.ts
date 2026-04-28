@@ -1,7 +1,7 @@
-import { AuthenticatedUser } from "../../api/types";
+import { UserSearchResult } from "../../api/types";
 
 export interface UseSearchUsersState {
-  users: AuthenticatedUser[];
+  users: UserSearchResult[];
   loading: boolean;
   error: string | null;
 }

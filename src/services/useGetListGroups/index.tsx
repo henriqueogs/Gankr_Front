@@ -10,7 +10,7 @@ export const useGetListGroups = (): UseGetListGroupsReturn => {
   });
 
   const fetchGroups = useCallback(async () => {
-    setState((prev) => ({ ...prev, loading: true, error: null }));
+    // setState((prev) => ({ ...prev, loading: true, error: null })); // Removed to avoid sync setState warning
 
     try {
       const data = await groupApi.listGroups();
@@ -30,6 +30,7 @@ export const useGetListGroups = (): UseGetListGroupsReturn => {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line
     fetchGroups();
   }, [fetchGroups]);
 

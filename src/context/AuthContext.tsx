@@ -27,6 +27,7 @@ interface AuthContextValue {
 
 const STORAGE_KEY = "gankr.auth";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext<AuthContextValue | undefined>(
   undefined
 );
@@ -124,7 +125,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       logout,
       setSession,
     }),
-    [user, token, login, register, logout, setSession]
+    [user, token, login, register, logout, setSession, setUserSession]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
